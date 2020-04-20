@@ -9,9 +9,18 @@ export const fetchData = async () => {
       confirmed:res.data.confirmed,
       recovered:res.data.recovered,
       deaths:res.data.deaths,
-      lastUpdte:res.data.lastUpdte,
+      lastUpdte:res.data.lastUpdate,
     }
     // res.data
     return updatedData;
   } catch (error) {}
 };
+
+export const fetchDailyData = async () => {
+  try {
+    const res = await axios.get(`${url}/daily`)
+    return res.data
+  } catch (error) {
+    
+  }
+}
