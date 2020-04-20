@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { fetchDailyData } from "../../api";
+import { Line, Bar } from "react-chartjs-2";
+
+import styles from "./Chart.module.css";
 
 const Chart = () => {
-    return (
-        <div>
-            <h1>Chart</h1>
-        </div>
-    )
-}
+  const [dailyData, setDailyData] = useState({});
 
-export default Chart
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setDailyData(await fetchDailyData());
+    };
+    fetchAPI();
+  });
+  const lineChart = dailyData[0] ? (
+    <Line
+      data={{
+        labels: dailyData(({date})=>date),
+        datasets: [{
+            data:dailyData(({confirmed})=>confirmed),
+            label:'Infected',
+            borderColor: '#3333ff',
+            fill: true,
+        }, {}],
+      }}
+    />
+  ) : null;
+  return (
+    <div>
+      <h1>Chart</h1>
+    </div>
+  );
+};
+
+export default Chart;
