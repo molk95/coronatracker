@@ -4,23 +4,28 @@ const url = "https://covid19.mathdro.id/api";
 
 export const fetchData = async () => {
   try {
-    const res = await axios.get(url);
-    const updatedData = {
-      confirmed:res.data.confirmed,
-      recovered:res.data.recovered,
-      deaths:res.data.deaths,
-      lastUpdte:res.data.lastUpdate,
-    }
-    // res.data
-    return updatedData;
+    const {
+      data: { confirmed, recovered, deaths, lastUpdate },
+    } = await axios.get(url);
+
+    return {
+      confirmed,
+      recovered,
+      deaths,
+      lastUpdate,
+    };
   } catch (error) {}
 };
 
 export const fetchDailyData = async () => {
   try {
-    const res = await axios.get(`${url}/daily`)
-    return res.data
-  } catch (error) {
-    
-  }
-}
+    const { data } = await axios.get(`${url}/daily`);
+    const updatedData = data.map((dailyData) => ({
+      confirmed: dailyData.confirmed.total,
+      deaths: dailyData.deaths.total,
+      date: dailyData.reportDate,
+    }));
+
+    return updatedData;
+  } catch (error) {}
+};
