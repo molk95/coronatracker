@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchDailyData } from "../../api";
-import { Line, Bar, Pie } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 
 import styles from "./Chart.module.css";
 
@@ -23,13 +23,13 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
             {
               data: dailyData.map(({ confirmed }) => confirmed),
               label: "Infected",
-              borderColor: "#3333ff",
+              borderColor: "#e2c000",
               fill: true,
             },
             {
               data: dailyData.map(({ deaths }) => deaths),
               label: "Deaths",
-              borderColor: "red",
+              borderColor: "#e41d24",
               backgroundColor: "rgba(255,0,0,0.5)",
               fill: true,
             },
@@ -39,18 +39,18 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
     ) : null;
   const BarChart =
    ( confirmed ? (
-      <Pie
+      <Bar
         data={{
-          labels: ["Infected", "Recovered", "Deaths"],
+          labels: ["Active", "Recovered", "Deaths"],
           datasets: [
             {
               label: "People",
               backgroundColor: [
-                "rgba(0, 0, 255, 0.5)",
+                "rgba(226, 192, 0, 0.5)",
                 "rgba(0, 255, 0, 0.5)",
-                "rgba(255, 0, 0, 0.5)",
+                "rgba(230, 60, 37, 0.5)",
               ],
-              data: [confirmed.value, recovered.value, deaths.value],
+              data: [confirmed.value , recovered.value, deaths.value],
             },
           ],
         }}
